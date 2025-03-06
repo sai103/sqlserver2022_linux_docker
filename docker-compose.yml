@@ -1,0 +1,18 @@
+services:
+  # SQL Serverサービスの設定
+  sqlserver:
+    build:
+      context: .  # ビルドコンテキストをカレントディレクトリに設定
+      dockerfile: Dockerfile  # 使用するDockerfileを指定
+    ports:
+      - "1433:1433"  # ホストとコンテナのポートマッピング
+    environment:
+      - ACCEPT_EULA=Y  # SQLServerのライセンス同意
+      - MSSQL_SA_PASSWORD= # SAユーザーのパスワードを設定
+      - MSSQL_TCP_ENABLED=1
+      - MSSQL_IP_ADDRESS=0.0.0.0
+    volumes:
+      - sqlserver_data:/var/opt/mssql  # データの永続化設定
+
+volumes:
+  sqlserver_data:
